@@ -125,6 +125,13 @@ async function run() {
       res.send(result);
     });
 
+    // insert a rooms data 
+    app.post("/rooms", async(req, res) => {
+      const data = req.body 
+      const result  = await roomsCollection.insertOne(data)
+      res.send(result)
+    })
+
 
     
 
