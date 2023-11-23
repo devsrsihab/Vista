@@ -1,18 +1,16 @@
 import PropTypes from "prop-types"; // ES6
-
 import Calender from "./Calender";
 import Button from "../Button/Button";
 import { formatDistance } from "date-fns";
 import { useEffect, useState } from "react";
 
 const RoomReservation = ({ room }) => {
+
   // totall days
   const [totallPrice, setTotallPrice] = useState(0);
-//   const [value, setValue] = useState({
-//     startDate : new Date(room?.from),
-//     endDate : new Date(room.to),
-//     key: 'selection'
-//   })
+  const [value, setValue] = useState({})
+  // console.log('startDate===>',room.from, 'endDate===>',room.to);
+
   useEffect(() => {
     const totalPriceCalc = async () => {
       if (room) {
@@ -20,6 +18,11 @@ const RoomReservation = ({ room }) => {
         const from = new Date(room.from);
         const totallDays = parseInt(formatDistance(to, from).split(" ")[0]);
         const totallPrice = totallDays * room?.price;
+        setValue({
+          startDate : new Date(room?.from),
+          endDate : new Date(room?.to),
+          key: 'selection'
+        })
         return totallPrice;
       }
       return null;
@@ -43,7 +46,10 @@ const RoomReservation = ({ room }) => {
         </div>
 
         <div className="flex w-full justify-center">
-          <Calender   />
+          <Calender
+          value={value}
+          
+          />
         </div>
         <hr />
         <div className="p-4">

@@ -1,35 +1,13 @@
-import { useParams } from "react-router-dom";
 import Container from "../../components/Shared/Container";
-import { useState } from "react";
-import { useEffect } from "react";
-import Loader from "../../components/Shared/Loader";
 import { Helmet } from "react-helmet-async";
 import Header from "../../components/RoomDetails/Header";
 import RoomInfo from "./RoomInfo";
 import RoomReservation from "../../components/RoomDetails/RoomReservation";
+import { useLoaderData } from "react-router-dom";
 
 const RoomDetails = () => {
-  // params
-  const { id } = useParams();
-  //  room state
-  const [room, setRoom] = useState({});
-  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    setLoading(true);
-    fetch(
-      "https://raw.githubusercontent.com/devsrsihab/stayVista-starter-template/main/client/public/rooms.json"
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        const singleRoom = data.find((item) => item._id === id);
-        setRoom(singleRoom);
-        setLoading(false);
-      });
-  }, [id]);
-  console.log(room);
-
-  if (loading) return <Loader />;
+ const room = useLoaderData()
 
   return (
     <Container>
